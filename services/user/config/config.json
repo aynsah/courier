@@ -1,0 +1,9 @@
+{
+    "port": ":8801",
+
+    "dbType": "mysql",
+    "dbAddress": "127.0.0.1:3606",
+    "dbUsername": "root",
+    "dbPassword": "",
+    "dbName": "courier"
+}
