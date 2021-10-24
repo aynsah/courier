@@ -2,11 +2,9 @@ package models
 
 import (
 	"courier/pkg/token"
-	"courier/services/user/config"
 	"courier/services/user/database"
 	"database/sql"
 	"errors"
-	"fmt"
 	"net/http"
 
 	"golang.org/x/crypto/bcrypt"
@@ -94,7 +92,6 @@ func FindUserByMSISDN(MSISDN string, user *User) (int, error) {
 			  FROM users
 			  WHERE users.msisdn = ?`
 
-	fmt.Print(config.Config)
 	err = db.QueryRow(query, MSISDN).Scan(&user.UUID, &user.MSISDN, &user.Username, &user.Password)
 
 	if err == sql.ErrNoRows {

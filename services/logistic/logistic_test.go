@@ -14,6 +14,9 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+const validToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtc2lzZG4iOiI2Mjg5MTYyMzUxMjMiLCJ1c2VybmFtZSI6Imd1bWl5YSIsInV1aWQiOiIwMmM0Yzc1ZC0zNDRlLTExZWMtOGYzNi0wMDE1NWQwNzRjOWUifQ.0uhFfOYEBxko1iVwxieo49F0T5gDzgleJrj-H__KyDU"
+const invalidToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IpXVCJ9.eyJtc2lzZG4iOiI2Mjg5MTYyMzUxMjMiLCJ1c2VybmFtZSI6Imd1bWl5YSIsInV1aWQiOiIwMmM0Yzc1ZC0zNDRlLTExZWMtOGYzNi0wMDE1NWQwNzRjOWUifQ.0uhFfOYEBxko1iVwxieo49F0T5gDzgleJrj-H__KyDU"
+
 func initServer() {
 	config.LoadConfig()
 	database.LoadDatabase()
@@ -30,7 +33,7 @@ func TestLogisticListValidToken(t *testing.T) {
 
 	req, err := http.NewRequest(http.MethodPost, "/api/v1/logistics/", nil)
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
-	req.Header.Set("Authorization", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtc2lzZG4iOiI2Mjg5MTYyMzUxMjMiLCJ1c2VybmFtZSI6Imd1bWl5YSIsInV1aWQiOiIwMmM0Yzc1ZC0zNDRlLTExZWMtOGYzNi0wMDE1NWQwNzRjOWUifQ.0uhFfOYEBxko1iVwxieo49F0T5gDzgleJrj-H__KyDU")
+	req.Header.Set("Authorization", validToken)
 	if err != nil {
 		t.Fatalf("Error while getting list : %v\n", err.Error())
 	}
@@ -57,7 +60,7 @@ func TestLogisticListInvalidToken(t *testing.T) {
 
 	req, err := http.NewRequest(http.MethodPost, "/api/v1/logistics/", nil)
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
-	req.Header.Set("Authorization", "eyJhbGciOiJIUzI1NiIsInR5cCI6IpXVCJ9.eyJtc2lzZG4iOiI2Mjg5MTYyMzUxMjMiLCJ1c2VybmFtZSI6Imd1bWl5YSIsInV1aWQiOiIwMmM0Yzc1ZC0zNDRlLTExZWMtOGYzNi0wMDE1NWQwNzRjOWUifQ.0uhFfOYEBxko1iVwxieo49F0T5gDzgleJrj-H__KyDU")
+	req.Header.Set("Authorization", invalidToken)
 	if err != nil {
 		t.Fatalf("Error while getting list : %v\n", err.Error())
 	}
@@ -76,8 +79,8 @@ func TestLogisticListInvalidToken(t *testing.T) {
 func TestSearchLogistics(t *testing.T) {
 	initServer()
 	parm := url.Values{}
-	parm.Add("origin_name", "sad")
-	parm.Add("destination_name", "sda")
+	parm.Add("origin_name", "Bandung")
+	parm.Add("destination_name", "Jakarta")
 
 	gin.SetMode(gin.TestMode)
 
@@ -87,7 +90,7 @@ func TestSearchLogistics(t *testing.T) {
 
 	req, err := http.NewRequest(http.MethodPost, "/api/v1/logistics/search", strings.NewReader(parm.Encode()))
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
-	req.Header.Set("Authorization", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtc2lzZG4iOiI2Mjg5MTYyMzUxMjMiLCJ1c2VybmFtZSI6Imd1bWl5YSIsInV1aWQiOiIwMmM0Yzc1ZC0zNDRlLTExZWMtOGYzNi0wMDE1NWQwNzRjOWUifQ.0uhFfOYEBxko1iVwxieo49F0T5gDzgleJrj-H__KyDU")
+	req.Header.Set("Authorization", validToken)
 	if err != nil {
 		t.Fatalf("Error while getting list by origin name and destination name: %v\n", err.Error())
 	}

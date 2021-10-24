@@ -13,6 +13,9 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+const validToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtc2lzZG4iOiI2Mjg5MTYyMzUxMjMiLCJ1c2VybmFtZSI6Imd1bWl5YSIsInV1aWQiOiIwMmM0Yzc1ZC0zNDRlLTExZWMtOGYzNi0wMDE1NWQwNzRjOWUifQ.0uhFfOYEBxko1iVwxieo49F0T5gDzgleJrj-H__KyDU"
+const invalidToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IpXVCJ9.eyJtc2lzZG4iOiI2Mjg5MTYyMzUxMjMiLCJ1c2VybmFtZSI6Imd1bWl5YSIsInV1aWQiOiIwMmM0Yzc1ZC0zNDRlLTExZWMtOGYzNi0wMDE1NWQwNzRjOWUifQ.0uhFfOYEBxko1iVwxieo49F0T5gDzgleJrj-H__KyDU"
+
 func initServer() {
 	config.LoadConfig()
 	database.LoadDatabase()
@@ -21,7 +24,7 @@ func initServer() {
 func TestLogin(t *testing.T) {
 	initServer()
 	parm := url.Values{}
-	parm.Add("MSISDN", "628122150122412")
+	parm.Add("MSISDN", "6281221501224")
 	parm.Add("Password", "wellsad")
 
 	gin.SetMode(gin.TestMode)
@@ -58,7 +61,7 @@ func TestInfoValidToken(t *testing.T) {
 
 	req, err := http.NewRequest(http.MethodPost, "/api/v1/users/info", nil)
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
-	req.Header.Set("Authorization", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtc2lzZG4iOiI2Mjg5MTYyMzUxMjMiLCJ1c2VybmFtZSI6Imd1bWl5YSIsInV1aWQiOiIwMmM0Yzc1ZC0zNDRlLTExZWMtOGYzNi0wMDE1NWQwNzRjOWUifQ.0uhFfOYEBxko1iVwxieo49F0T5gDzgleJrj-H__KyDU")
+	req.Header.Set("Authorization", validToken)
 	if err != nil {
 		t.Fatalf("Error while getting info : %v\n", err.Error())
 	}
@@ -84,7 +87,7 @@ func TestInfoInvalidToken(t *testing.T) {
 
 	req, err := http.NewRequest(http.MethodPost, "/api/v1/users/info", nil)
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
-	req.Header.Set("Authorization", "eyJhbGciOiJIUzI1NiIsInR5cC6IkpXVCJ9.eyJtc2lzZG4iOiI2Mjg5MTYyMzUxMjMiLCJ1c2VybmFtZSI6Imd1bWl5YSIsInV1aWQiOiIwMmM0Yzc1ZC0zNDRlLTExZWMtOGYzNi0wMDE1NWQwNzRjOWUifQ.0uhFfOYEBxko1iVwxieo49F0T5gDzgleJrj-H__KyDU")
+	req.Header.Set("Authorization", invalidToken)
 	if err != nil {
 		t.Fatalf("Error while getting info : %v\n", err.Error())
 	}
@@ -103,7 +106,7 @@ func TestInfoInvalidToken(t *testing.T) {
 func TestSignUpValid(t *testing.T) {
 	initServer()
 	parm := url.Values{}
-	parm.Add("MSISDN", "628122150122412")
+	parm.Add("MSISDN", "6281222341234")
 	parm.Add("Username", "NewUsername")
 	parm.Add("Password", "NewPassword")
 
@@ -134,7 +137,7 @@ func TestSignUpValid(t *testing.T) {
 func TestSignUpInvalid(t *testing.T) {
 	initServer()
 	parm := url.Values{}
-	parm.Add("MSISDN", "08122150122412")
+	parm.Add("MSISDN", "081222341234")
 	parm.Add("Username", "NewUsername2")
 	parm.Add("Password", "NewPassword2")
 
