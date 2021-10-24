@@ -8,6 +8,17 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// LogisticList godoc
+// @Summary List of Logistics
+// @Schemes
+// @Description Get all Logistics from database
+// @Tags Logistic
+// @Accept multipart/form-data
+// @Produce json
+// @Success 200 {array} []models.Logistic
+// @Failder 401 {string} message
+// @Failder 500 {string} message
+// @Router / [post]
 func LogisticList(c *gin.Context) {
 	var logistics []models.Logistic
 	status, err := models.GetAllLogistics(&logistics)
@@ -22,6 +33,18 @@ func LogisticList(c *gin.Context) {
 	})
 }
 
+// SearchLogistics godoc
+// @Summary Search Data Logistics
+// @Schemes
+// @Description Search Logistics from database by origin_name and destination_name
+// @Tags Logistic
+// @Accept multipart/form-data
+// @Produce json
+// @Success 200 {array} []models.Logistic
+// @Failder 400 {string} message
+// @Failder 401 {string} message
+// @Failder 500 {string} message
+// @Router /search [post]
 func SearchLogistics(c *gin.Context) {
 	origin_name := c.PostForm("origin_name")
 	destination_name := c.PostForm("destination_name")

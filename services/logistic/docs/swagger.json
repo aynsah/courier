@@ -1,0 +1,94 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "List APIs of LogisticManagement Service",
+        "title": "LogisticManagement Service API Document",
+        "termsOfService": "http://swagger.io/terms/",
+        "contact": {},
+        "version": "1.0"
+    },
+    "host": "localhost:8802",
+    "basePath": "/api/v1/logistics",
+    "paths": {
+        "/": {
+            "post": {
+                "description": "Get all Logistics from database",
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Logistic"
+                ],
+                "summary": "List of Logistics",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/definitions/models.Logistic"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/search": {
+            "post": {
+                "description": "Search Logistics from database by origin_name and destination_name",
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Logistic"
+                ],
+                "summary": "Search Data Logistics",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/definitions/models.Logistic"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "models.Logistic": {
+            "type": "object",
+            "properties": {
+                "amount": {
+                    "type": "string"
+                },
+                "destination_name": {
+                    "type": "string"
+                },
+                "duration": {
+                    "type": "string"
+                },
+                "logistic_name": {
+                    "type": "string"
+                },
+                "origin_name": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

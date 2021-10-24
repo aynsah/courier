@@ -10,6 +10,17 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// SignUp godoc
+// @Summary Sign Up a new user
+// @Schemes
+// @Description Create data user if MSISDN or Username Doesn't exists
+// @Tags User
+// @Accept multipart/form-data
+// @Produce json
+// @Success 200 {string} message
+// @Failder 400 {string} message
+// @Failder 500 {string} message
+// @Router /sign-up [post]
 func SignUp(c *gin.Context) {
 	var user models.User
 	err := c.Bind(&user)
@@ -50,6 +61,18 @@ func SignUp(c *gin.Context) {
 	})
 }
 
+// Login godoc
+// @Summary User Login
+// @Schemes
+// @Description Login using MSISDN and Password and return JWT Token
+// @Tags User
+// @Accept multipart/form-data
+// @Produce json
+// @Success 200 {string} token
+// @Failder 401 {string} message
+// @Failder 400 {string} message
+// @Failder 500 {string} message
+// @Router /login [post]
 func Login(c *gin.Context) {
 	var credential models.Credential
 	err := c.Bind(&credential)
@@ -87,6 +110,16 @@ func Login(c *gin.Context) {
 	})
 }
 
+// Info godoc
+// @Summary User Info
+// @Schemes
+// @Description Get User/Claims Info from Token
+// @Tags User
+// @Accept multipart/form-data
+// @Produce json
+// @Success 200 {object} models.User
+// @Failder 401 {string} message
+// @Router /info [post]
 func Info(c *gin.Context) {
 	tokenString := c.Request.Header.Get("Authorization")
 

@@ -1,0 +1,67 @@
+basePath: /api/v1/users
+definitions:
+  models.User:
+    properties:
+      msisdn:
+        type: string
+      password:
+        type: string
+      username:
+        type: string
+      uuid:
+        type: string
+    type: object
+host: localhost:8801
+info:
+  contact: {}
+  description: List APIs of UserManagement Service
+  termsOfService: http://swagger.io/terms/
+  title: UserManagement Service API Document
+  version: "1.0"
+paths:
+  /info:
+    post:
+      consumes:
+      - multipart/form-data
+      description: Get User/Claims Info from Token
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.User'
+      summary: User Info
+      tags:
+      - User
+  /login:
+    post:
+      consumes:
+      - multipart/form-data
+      description: Login using MSISDN and Password and return JWT Token
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: User Login
+      tags:
+      - User
+  /sign-up:
+    post:
+      consumes:
+      - multipart/form-data
+      description: Create data user if MSISDN or Username Doesn't exists
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Sign Up a new user
+      tags:
+      - User
+swagger: "2.0"

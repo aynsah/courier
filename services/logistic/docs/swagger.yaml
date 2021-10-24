@@ -1,0 +1,62 @@
+basePath: /api/v1/logistics
+definitions:
+  models.Logistic:
+    properties:
+      amount:
+        type: string
+      destination_name:
+        type: string
+      duration:
+        type: string
+      logistic_name:
+        type: string
+      origin_name:
+        type: string
+    type: object
+host: localhost:8802
+info:
+  contact: {}
+  description: List APIs of LogisticManagement Service
+  termsOfService: http://swagger.io/terms/
+  title: LogisticManagement Service API Document
+  version: "1.0"
+paths:
+  /:
+    post:
+      consumes:
+      - multipart/form-data
+      description: Get all Logistics from database
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              items:
+                $ref: '#/definitions/models.Logistic'
+              type: array
+            type: array
+      summary: List of Logistics
+      tags:
+      - Logistic
+  /search:
+    post:
+      consumes:
+      - multipart/form-data
+      description: Search Logistics from database by origin_name and destination_name
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              items:
+                $ref: '#/definitions/models.Logistic'
+              type: array
+            type: array
+      summary: Search Data Logistics
+      tags:
+      - Logistic
+swagger: "2.0"

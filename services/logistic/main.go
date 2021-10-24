@@ -31,6 +31,13 @@ func (m *Main) initServer() error {
 	return err
 }
 
+// @title LogisticManagement Service API Document
+// @version 1.0
+// @description List APIs of LogisticManagement Service
+// @termsOfService http://swagger.io/terms/
+
+// @host localhost:8802
+// @BasePath /api/v1/logistics
 func main() {
 	m := Main{}
 
