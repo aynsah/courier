@@ -7,6 +7,8 @@ services:
     restart: always
     ports:
       - "8801:8801"
+    depends_on:
+      - mariadb
   courier-logistic:
     build:
       context: .
@@ -14,6 +16,8 @@ services:
     restart: always
     ports:
       - "8802:8802"
+    depends_on:
+      - mariadb
   mariadb:
     image: mariadb:latest
     restart: always
@@ -26,5 +30,6 @@ services:
       - "3306:3306"
     volumes:
       - db:/var/lib/mysql
+      - ./courier.sql:/docker-entrypoint-initdb.d/courier.sql
 volumes:
   db:
