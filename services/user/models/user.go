@@ -2,9 +2,11 @@ package models
 
 import (
 	"courier/pkg/token"
+	"courier/services/user/config"
 	"courier/services/user/database"
 	"database/sql"
 	"errors"
+	"fmt"
 	"net/http"
 
 	"golang.org/x/crypto/bcrypt"
@@ -50,11 +52,19 @@ func (u User) GenerateToken(JwtToken *token.JwtToken) error {
 }
 
 func (u User) Save() (int, error) {
+	if u.MSISDN == "" || u.Username == "" || u.Password == "" {
+		return http.StatusBadRequest, errors.New("value cannot be nil")
+	}
+
+	if u.MSISDN[:2] != "62" {
+		return http.StatusBadRequest, errors.New("invalid MSISDN")
+	}
+
 	db := database.DB
 
 	err := u.HashPassword()
 	if err != nil {
-		return http.StatusInternalServerError, errors.New("Hash password failed")
+		return http.StatusInternalServerError, errors.New("hash password failed")
 	}
 
 	query := "INSERT INTO users (msisdn, username, password) VALUES (? , ?, ?)"
@@ -84,6 +94,7 @@ func FindUserByMSISDN(MSISDN string, user *User) (int, error) {
 			  FROM users
 			  WHERE users.msisdn = ?`
 
+	fmt.Print(config.Config)
 	err = db.QueryRow(query, MSISDN).Scan(&user.UUID, &user.MSISDN, &user.Username, &user.Password)
 
 	if err == sql.ErrNoRows {

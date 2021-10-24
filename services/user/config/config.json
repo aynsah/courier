@@ -2,7 +2,7 @@
     "port": ":8801",
 
     "dbType": "mysql",
-    "dbAddress": "127.0.0.1:3606",
+    "dbAddress": "127.0.0.1:3306",
     "dbUsername": "root",
     "dbPassword": "",
     "dbName": "courier"

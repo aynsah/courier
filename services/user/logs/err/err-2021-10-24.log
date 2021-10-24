@@ -1,0 +1,8 @@
+24-10-2021 12:42:44 => /api/v1/users/sign-up
+400 => Sign up failed
+invalid MSISDN
+
+24-10-2021 12:42:55 => /api/v1/users/sign-up
+400 => Sign up failed
+invalid MSISDN
+

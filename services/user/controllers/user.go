@@ -19,6 +19,7 @@ import (
 // @Produce json
 // @Success 200 {string} message
 // @Failder 400 {string} message
+// @Failder 403 {string} message
 // @Failder 500 {string} message
 // @Router /sign-up [post]
 func SignUp(c *gin.Context) {
@@ -29,23 +30,13 @@ func SignUp(c *gin.Context) {
 		return
 	}
 
-	if user.MSISDN == "" || user.Username == "" || user.Password == "" {
-		response.ShowErr(c, http.StatusBadRequest, "Value cannot be nil", nil)
-		return
-	}
-
-	if user.MSISDN[:2] != "62" {
-		response.ShowErr(c, http.StatusBadRequest, "Invalid MSISDN", nil)
-		return
-	}
-
 	exists, err := models.IsUserExists(user.MSISDN, user.Username)
 	if err != nil {
 		response.ShowErr(c, http.StatusBadRequest, err.Error(), nil)
 		return
 	}
 	if exists {
-		response.ShowErr(c, http.StatusBadRequest, "User already exists", nil)
+		response.ShowErr(c, http.StatusForbidden, "User already exists", nil)
 		return
 	}
 
