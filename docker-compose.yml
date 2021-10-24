@@ -1,0 +1,12 @@
+version: "3"
+services:
+  courier-user:
+    build: services/user/.
+    restart: always
+    ports:
+      - "8801:8801"
+  courier-logistic:
+    build: services/logistic/.
+    restart: always
+    ports:
+      - "8802:8802"
