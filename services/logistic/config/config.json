@@ -2,8 +2,8 @@
     "port": ":8802",
 
     "dbType": "mysql",
-    "dbAddress": "127.0.0.1:3606",
-    "dbUsername": "root",
-    "dbPassword": "",
+    "dbAddress": "mariadb:3306",
+    "dbUsername": "courier",
+    "dbPassword": "courier",
     "dbName": "courier"
 }

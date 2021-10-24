@@ -1,12 +1,30 @@
 version: "3"
 services:
   courier-user:
-    build: services/user/.
+    build:
+      context: .
+      dockerfile: ./services/user/Dockerfile
     restart: always
     ports:
       - "8801:8801"
   courier-logistic:
-    build: services/logistic/.
+    build:
+      context: .
+      dockerfile: ./services/logistic/Dockerfile
     restart: always
     ports:
       - "8802:8802"
+  mariadb:
+    image: mariadb:latest
+    restart: always
+    environment:
+      MYSQL_DATABASE: "courier"
+      MYSQL_USER: "courier"
+      MYSQL_PASSWORD: "courier"
+      MYSQL_ROOT_PASSWORD: "rootPassword"
+    ports:
+      - "3306:3306"
+    volumes:
+      - db:/var/lib/mysql
+volumes:
+  db:
